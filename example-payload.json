@@ -1,0 +1,216 @@
+{
+    "_comment": "Example payloads for testing the Proposal Auto-Generator Platform API",
+    "vac_example": {
+        "institutionProfile": {
+            "name": "Sri Venkateswara College of Engineering",
+            "type": "college",
+            "location": "Chennai, Tamil Nadu, India",
+            "established": 1985,
+            "departments": [
+                "Computer Science and Engineering",
+                "Electronics and Communication Engineering",
+                "Mechanical Engineering",
+                "Civil Engineering",
+                "Information Technology"
+            ],
+            "studentCount": 4500,
+            "accreditation": "NAAC A+ | NBA Accredited",
+            "website": "https://svce.ac.in",
+            "contactEmail": "principal@svce.ac.in",
+            "vision": "To be a globally recognized institution producing industry-ready, ethically grounded engineers.",
+            "mission": "To provide excellence in technical education through innovative pedagogy, research, and strong industry-academia partnerships.",
+            "specializations": [
+                "Artificial Intelligence",
+                "IoT",
+                "Data Science",
+                "Embedded Systems"
+            ]
+        },
+        "gapAnalysis": [
+            {
+                "title": "Lack of Practical AI/ML Exposure Among Final Year Students",
+                "description": "Final-year students demonstrate significant theoretical knowledge in artificial intelligence and machine learning but lack hands-on implementation skills in real-world datasets, model deployment, and production-grade ML pipelines.",
+                "category": "skill_gap",
+                "severity": "critical",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Information Technology"
+                ],
+                "estimatedImpact": "Directly affects campus placement outcomes with 60% of students failing technical rounds in AI-focused companies."
+            },
+            {
+                "title": "Outdated Curriculum in Cloud Computing and DevOps Practices",
+                "description": "The existing curriculum on cloud computing covers only foundational AWS concepts from 2019. Modern cloud-native architectures, containerization (Docker/Kubernetes), CI/CD pipelines, and serverless computing are entirely absent.",
+                "category": "curriculum",
+                "severity": "high",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Information Technology",
+                    "Electronics and Communication Engineering"
+                ],
+                "estimatedImpact": "Reduces industry readiness and limits student eligibility for cloud-focused internship and job roles."
+            },
+            {
+                "title": "Insufficient Industry-Academic Collaboration in Research Projects",
+                "description": "Research projects undertaken by students are largely academically oriented with minimal industry problem statements. Industry partners are not engaged in project mentorship, funding, or real-world validation.",
+                "category": "industry_alignment",
+                "severity": "high",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Mechanical Engineering",
+                    "Electronics and Communication Engineering"
+                ],
+                "estimatedImpact": "Results in low research publication quality and poor alignment with industry innovation requirements."
+            },
+            {
+                "title": "Inadequate Laboratory Infrastructure for Embedded Systems Development",
+                "description": "The embedded systems laboratory lacks modern microcontrollers (STM32, ESP32), RTOS development tools, FPGA boards, and industry-standard simulation software, limiting practical exposure.",
+                "category": "infrastructure",
+                "severity": "medium",
+                "affectedDepartments": [
+                    "Electronics and Communication Engineering"
+                ],
+                "estimatedImpact": "Prevents students from developing embedded product prototypes aligned with IoT industry standards."
+            },
+            {
+                "title": "Limited Soft Skills and Professional Communication Training",
+                "description": "Students demonstrate weak professional communication skills including technical writing, presentation delivery, team collaboration, and cross-functional communication, which are increasingly required by employers.",
+                "category": "skill_gap",
+                "severity": "medium",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Information Technology",
+                    "Mechanical Engineering",
+                    "Civil Engineering",
+                    "Electronics and Communication Engineering"
+                ],
+                "estimatedImpact": "Estimated 30% placement rejection due to soft skill deficiencies in HR rounds."
+            }
+        ],
+        "proposalType": "vac"
+    },
+    "internship_example": {
+        "institutionProfile": {
+            "name": "Madurai Kamaraj University – Department of Technology",
+            "type": "university",
+            "location": "Madurai, Tamil Nadu, India",
+            "established": 1966,
+            "departments": [
+                "Computer Science",
+                "Electronics",
+                "Chemistry",
+                "Physics",
+                "Mathematics"
+            ],
+            "studentCount": 12000,
+            "accreditation": "NAAC A",
+            "mission": "To advance knowledge through research, teaching, and community engagement."
+        },
+        "gapAnalysis": [
+            {
+                "title": "Zero Real-World Industry Exposure for Postgraduate Students",
+                "description": "Postgraduate students complete their degrees with no structured industry exposure, resulting in a significant gap between academic theory and workplace expectations.",
+                "category": "industry_alignment",
+                "severity": "critical",
+                "affectedDepartments": [
+                    "Computer Science",
+                    "Electronics"
+                ],
+                "estimatedImpact": "Over 75% of PG graduates remain unemployed for 6+ months post-graduation due to lack of practical experience."
+            },
+            {
+                "title": "Absence of Data Science and Analytics Competency",
+                "description": "Neither undergraduate nor postgraduate curricula include structured modules on data analytics, statistical modelling, or data visualization tools used by modern organizations.",
+                "category": "skill_gap",
+                "severity": "high",
+                "affectedDepartments": [
+                    "Computer Science",
+                    "Mathematics",
+                    "Physics"
+                ],
+                "estimatedImpact": "Students are ineligible for data analyst and business intelligence roles across the industry."
+            },
+            {
+                "title": "Inadequate Exposure to Agile and Scrum Methodologies",
+                "description": "Software development courses do not include agile frameworks, sprint planning, or project management tools such as JIRA, which are standard in all modern software companies.",
+                "category": "curriculum",
+                "severity": "medium",
+                "affectedDepartments": [
+                    "Computer Science"
+                ],
+                "estimatedImpact": "Students require significant onboarding time after placement, reducing productivity and raising employer dissatisfaction."
+            }
+        ],
+        "proposalType": "internship"
+    },
+    "hackathon_example": {
+        "institutionProfile": {
+            "name": "PSG College of Technology",
+            "type": "college",
+            "location": "Coimbatore, Tamil Nadu, India",
+            "established": 1951,
+            "departments": [
+                "Computer Science and Engineering",
+                "Electrical and Electronics Engineering",
+                "Mechanical Engineering",
+                "Robotics and Automation",
+                "Applied Sciences"
+            ],
+            "studentCount": 6000,
+            "accreditation": "NAAC A++ | NIRF Top 50",
+            "vision": "To emerge as a global centre for technical excellence, entrepreneurship, and innovation.",
+            "mission": "To develop competent engineers and technologists through quality education, research, and innovation."
+        },
+        "gapAnalysis": [
+            {
+                "title": "Low Innovation Culture and Student Entrepreneurship Participation",
+                "description": "Despite strong academic performance, student participation in national innovation challenges, startup incubators, and technology competitions is negligible, indicating a cultural gap in applied creative problem-solving.",
+                "category": "collaboration",
+                "severity": "critical",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Mechanical Engineering",
+                    "Robotics and Automation",
+                    "Electrical and Electronics Engineering"
+                ],
+                "estimatedImpact": "Institutional innovation ranking has dropped 15 positions. Alumni entrepreneurs represent less than 2% of graduates."
+            },
+            {
+                "title": "Absence of Cross-Disciplinary Project Collaboration Infrastructure",
+                "description": "Students from different departments rarely collaborate on joint projects due to absence of structured frameworks, shared project spaces, or interdisciplinary faculty mentorship programs.",
+                "category": "infrastructure",
+                "severity": "high",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Robotics and Automation",
+                    "Applied Sciences"
+                ],
+                "estimatedImpact": "Limits development of complex multi-technology solutions and reduces competitiveness in national-level tech competitions."
+            },
+            {
+                "title": "Technology Transfer Gap Between Research and Industry",
+                "description": "Faculty and student research outputs rarely find pathways to industry adoption or commercialization. Intellectual property awareness and technology transfer processes are not institutionalized.",
+                "category": "research",
+                "severity": "high",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Mechanical Engineering",
+                    "Applied Sciences"
+                ],
+                "estimatedImpact": "Research funding from industry sources represents less than 5% of total institutional research budget."
+            },
+            {
+                "title": "Limited Exposure to Emerging Technologies: AR/VR and Blockchain",
+                "description": "Neither curriculum nor extracurricular programs include structured exposure to augmented reality, virtual reality, or blockchain technologies, which are increasingly demanded by leading technology employers.",
+                "category": "technology",
+                "severity": "medium",
+                "affectedDepartments": [
+                    "Computer Science and Engineering",
+                    "Electrical and Electronics Engineering"
+                ],
+                "estimatedImpact": "Students cannot compete for roles in Web3, metaverse, and immersive technology companies."
+            }
+        ],
+        "proposalType": "hackathon"
+    }
+}

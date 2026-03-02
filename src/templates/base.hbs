@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{proposalTitle}} – {{institution.name}}</title>
+  <style>
+    /* ================================================================
+       GLOBAL RESET & BASE
+    ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.7;
+      color: #1a1a2e;
+      background: #ffffff;
+    }
+
+    /* ================================================================
+       COVER PAGE
+    ================================================================ */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, #0f3460 0%, #16213e 40%, #1a1a2e 100%);
+      color: #ffffff;
+      page-break-after: always;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 30px;
+      padding: 6px 20px;
+      font-size: 9pt;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      color: #e0e7ff;
+    }
+
+    .cover-title {
+      font-size: 28pt;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+
+    .cover-subtitle {
+      font-size: 14pt;
+      font-weight: 300;
+      color: #a5b4fc;
+      margin-bottom: 50px;
+    }
+
+    .cover-divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #6366f1, #a5b4fc);
+      border-radius: 2px;
+      margin: 0 auto 50px;
+    }
+
+    .cover-institution {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 30px 50px;
+      margin-bottom: 60px;
+      max-width: 600px;
+    }
+
+    .cover-institution-label {
+      font-size: 8pt;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #a5b4fc;
+      margin-bottom: 10px;
+    }
+
+    .cover-institution-name {
+      font-size: 16pt;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .cover-institution-meta {
+      font-size: 10pt;
+      color: #c7d2fe;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 10px 40px;
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .cover-meta-item label {
+      font-size: 8pt;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #818cf8;
+      display: block;
+    }
+
+    .cover-meta-item span {
+      font-size: 10pt;
+      color: #e0e7ff;
+      font-weight: 600;
+    }
+
+    /* ================================================================
+       TABLE OF CONTENTS
+    ================================================================ */
+    .toc-page {
+      padding: 50px 40px;
+      page-break-after: always;
+    }
+
+    .toc-title {
+      font-size: 20pt;
+      font-weight: 700;
+      color: #0f3460;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #6366f1;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dotted #d1d5db;
+      font-size: 11pt;
+      color: #374151;
+    }
+
+    .toc-item .toc-num {
+      font-weight: 700;
+      color: #6366f1;
+      margin-right: 16px;
+      min-width: 24px;
+    }
+
+    .toc-item .toc-page {
+      color: #9ca3af;
+      font-size: 10pt;
+    }
+
+    /* ================================================================
+       CONTENT SECTIONS
+    ================================================================ */
+    .section {
+      padding: 40px 40px 30px;
+      page-break-inside: avoid;
+    }
+
+    .section + .section {
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .section-number {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14pt;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 16pt;
+      font-weight: 700;
+      color: #0f3460;
+      line-height: 1.2;
+    }
+
+    .section-title span.accent {
+      color: #6366f1;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #374151;
+      text-align: justify;
+    }
+
+    /* ================================================================
+       INFO CARDS & GRIDS
+    ================================================================ */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: #f8faff;
+      border: 1px solid #e0e7ff;
+      border-left: 4px solid #6366f1;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+
+    .info-card label {
+      font-size: 8pt;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #6366f1;
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .info-card span {
+      font-size: 11pt;
+      color: #1a1a2e;
+      font-weight: 600;
+    }
+
+    .info-card.full-width {
+      grid-column: span 2;
+    }
+
+    /* ================================================================
+       GAP ANALYSIS TABLE
+    ================================================================ */
+    .gap-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 10pt;
+    }
+
+    .gap-table thead tr {
+      background: linear-gradient(135deg, #0f3460, #16213e);
+      color: #fff;
+    }
+
+    .gap-table thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 9pt;
+      letter-spacing: 0.5px;
+    }
+
+    .gap-table tbody tr:nth-child(even) {
+      background: #f8faff;
+    }
+
+    .gap-table tbody tr:hover {
+      background: #eef2ff;
+    }
+
+    .gap-table tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: #6366f1;
+      color: #fff;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 9pt;
+    }
+
+    .score-bar-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .score-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: #e5e7eb;
+      flex: 1;
+      max-width: 80px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #6366f1, #a5b4fc);
+    }
+
+    .score-text {
+      font-weight: 700;
+      color: #4f46e5;
+      font-size: 9pt;
+      white-space: nowrap;
+    }
+
+    /* ================================================================
+       BADGES
+    ================================================================ */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-critical { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+    .badge-high     { background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; }
+    .badge-medium   { background: #fefce8; color: #ca8a04; border: 1px solid #fde68a; }
+    .badge-low      { background: #f0fdf4; color: #16a34a; border: 1px solid #86efac; }
+
+    /* ================================================================
+       LISTS & BULLETS
+    ================================================================ */
+    .styled-list {
+      list-style: none;
+      margin: 0 0 16px 0;
+      padding: 0;
+    }
+
+    .styled-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+      font-size: 10.5pt;
+    }
+
+    .styled-list li:last-child { border-bottom: none; }
+
+    .styled-list li::before {
+      content: '▸';
+      color: #6366f1;
+      font-size: 10pt;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .objectives-list {
+      counter-reset: objective-counter;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+    }
+
+    .objectives-list li {
+      counter-increment: objective-counter;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 16px;
+      background: #f8faff;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 10.5pt;
+      color: #374151;
+    }
+
+    .objectives-list li::before {
+      content: counter(objective-counter, decimal-leading-zero);
+      background: #6366f1;
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-weight: 700;
+      font-size: 9pt;
+      flex-shrink: 0;
+    }
+
+    /* ================================================================
+       TIMELINE
+    ================================================================ */
+    .timeline-summary-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-summary-card {
+      flex: 1;
+      background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .timeline-summary-card label {
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #a5b4fc;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .timeline-summary-card span {
+      font-size: 11pt;
+      font-weight: 700;
+    }
+
+    .phase-card {
+      border: 1px solid #e0e7ff;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .phase-header {
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .phase-name {
+      font-weight: 700;
+      color: #3730a3;
+      font-size: 11pt;
+    }
+
+    .phase-meta {
+      font-size: 9pt;
+      color: #6366f1;
+      font-weight: 600;
+    }
+
+    .phase-activities {
+      padding: 12px 20px;
+    }
+
+    .phase-activities li {
+      padding: 5px 0;
+      font-size: 10pt;
+      color: #374151;
+      border-bottom: 1px solid #f3f4f6;
+      list-style: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .phase-activities li:last-child { border-bottom: none; }
+
+    .phase-activities li::before {
+      content: '○';
+      color: #6366f1;
+      flex-shrink: 0;
+      font-size: 9pt;
+    }
+
+    /* ================================================================
+       BUDGET
+    ================================================================ */
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 10.5pt;
+    }
+
+    .budget-table tr:nth-child(even) { background: #f8faff; }
+
+    .budget-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .budget-table tr.total-row td {
+      background: linear-gradient(135deg, #0f3460, #16213e);
+      color: #fff;
+      font-weight: 700;
+      font-size: 11pt;
+    }
+
+    .budget-note {
+      font-size: 9pt;
+      color: #6b7280;
+      font-style: italic;
+      padding: 10px 16px;
+      background: #fffbeb;
+      border-left: 3px solid #fbbf24;
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ================================================================
+       KPI TABLE
+    ================================================================ */
+    .kpi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+      margin-top: 16px;
+    }
+
+    .kpi-table thead tr {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+    }
+
+    .kpi-table thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    .kpi-table tbody tr:nth-child(even) { background: #f8faff; }
+
+    /* ================================================================
+       PAGE BREAK
+    ================================================================ */
+    .page-break { page-break-after: always; }
+    .avoid-break { page-break-inside: avoid; }
+
+    /* ================================================================
+       FOOTER WATERMARK (inside document)
+    ================================================================ */
+    .doc-footer {
+      text-align: center;
+      padding: 30px 40px;
+      border-top: 2px solid #e0e7ff;
+      color: #9ca3af;
+      font-size: 9pt;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================== COVER PAGE ====================== -->
+  <div class="cover-page">
+    <div class="cover-badge">Confidential Institutional Proposal</div>
+    <div class="cover-title">{{proposalTitle}}</div>
+    <div class="cover-subtitle">Prepared for Institutional Review & Decision Making</div>
+    <div class="cover-divider"></div>
+
+    <div class="cover-institution">
+      <div class="cover-institution-label">Submitted To</div>
+      <div class="cover-institution-name">{{institution.name}}</div>
+      <div class="cover-institution-meta">{{titleCase institution.type}} &nbsp;·&nbsp; {{institution.location}}</div>
+    </div>
+
+    <div class="cover-meta-grid">
+      <div class="cover-meta-item">
+        <label>Document Date</label>
+        <span>{{formatDate}}</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Proposal Type</label>
+        <span>{{upperCase proposalType}}</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Gaps Identified</label>
+        <span>{{totalGaps}} Gaps Analysed</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Academic Year</label>
+        <span>{{currentYear}} – {{inc currentYear}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== MAIN CONTENT ====================== -->
+  {{{content}}}
+
+  <!-- ====================== DOCUMENT FOOTER ====================== -->
+  <div class="doc-footer">
+    <p>This document was automatically generated by the <strong>Proposal Auto-Generator Platform</strong>.</p>
+    <p>All data, estimates, and projections are based on the institutional gap analysis provided at the time of generation.</p>
+    <p>© {{currentYear}} – Confidential &amp; Proprietary. Not for distribution without institutional approval.</p>
+  </div>
+
+</body>
+</html>

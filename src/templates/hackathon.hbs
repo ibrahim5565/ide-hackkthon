@@ -1,0 +1,270 @@
+{{! Hackathon template – same 8 sections with hackathon-specific framing }}
+<!-- ===== 1. EXECUTIVE SUMMARY ===== -->
+<div class="section avoid-break">
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-title">Executive <span class="accent">Summary</span></div>
+    </div>
+    <p>{{executiveSummary}}</p>
+</div>
+
+<!-- ===== 2. INSTITUTIONAL OVERVIEW ===== -->
+<div class="section avoid-break">
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-title">Institutional <span class="accent">Overview</span></div>
+    </div>
+    <div class="info-grid">
+        <div class="info-card">
+            <label>Institution Name</label>
+            <span>{{institution.name}}</span>
+        </div>
+        <div class="info-card">
+            <label>Institution Type</label>
+            <span>{{titleCase institution.type}}</span>
+        </div>
+        <div class="info-card">
+            <label>Location</label>
+            <span>{{institution.location}}</span>
+        </div>
+        {{#if institution.established}}
+        <div class="info-card">
+            <label>Year Established</label>
+            <span>{{institution.established}}</span>
+        </div>
+        {{/if}}
+        {{#if institution.studentCount}}
+        <div class="info-card">
+            <label>Student Enrolment</label>
+            <span>{{institution.studentCount}} students</span>
+        </div>
+        {{/if}}
+        {{#if institution.accreditation}}
+        <div class="info-card">
+            <label>Accreditation</label>
+            <span>{{institution.accreditation}}</span>
+        </div>
+        {{/if}}
+        <div class="info-card full-width">
+            <label>Academic Departments</label>
+            <span>{{join institution.departments ', '}}</span>
+        </div>
+        {{#if institution.vision}}
+        <div class="info-card full-width">
+            <label>Institutional Vision</label>
+            <span>{{institution.vision}}</span>
+        </div>
+        {{/if}}
+    </div>
+</div>
+
+<!-- ===== 3. IDENTIFIED GAPS ===== -->
+<div class="section page-break">
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-title">Identified <span class="accent">Gaps</span></div>
+    </div>
+    <p>The identified gaps below are systematically scored using a multi-factor prioritization algorithm and serve as
+        the thematic basis for defining hackathon problem tracks. Each gap will be translated into one or more
+        structured problem statements to drive focused innovation during the event.</p>
+
+    {{#if criticalGaps.length}}
+    <div
+        style="background:#fef2f2; border-left:4px solid #dc2626; border-radius:0 8px 8px 0; padding:12px 20px; margin-bottom:20px;">
+        <strong style="color:#dc2626;">⚠ Critical Priority Alert:</strong>
+        <span style="color:#374151;"> {{criticalGaps.length}} gap(s) classified as Critical will serve as mandatory
+            hackathon problem tracks requiring solution prototypes within the event duration.</span>
+    </div>
+    {{/if}}
+
+    <table class="gap-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Gap Title</th>
+                <th>Category</th>
+                <th>Severity</th>
+                <th>Score</th>
+                <th>Affected Departments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each rankedGaps}}
+            <tr>
+                <td><span class="rank-badge">{{this.rank}}</span></td>
+                <td style="font-weight:600; color:#0f3460; max-width:180px;">{{this.title}}</td>
+                <td><span style="font-size:9pt; color:#6366f1;">{{titleCase this.category}}</span></td>
+                <td><span class="badge {{severityClass this.severity}}">{{this.severity}}</span></td>
+                <td>
+                    <div class="score-bar-wrapper">
+                        <div class="score-bar">
+                            <div class="score-bar-fill" style="width:{{this.score}}0%"></div>
+                        </div>
+                        <span class="score-text">{{this.score}}/10</span>
+                    </div>
+                </td>
+                <td style="font-size:9pt; color:#374151;">{{join this.affectedDepartments ', '}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- ===== 4. PRIMARY OBJECTIVES ===== -->
+<div class="section avoid-break">
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-title">Primary <span class="accent">Objectives</span></div>
+    </div>
+    <ol class="objectives-list">
+        {{#each objectives}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ol>
+</div>
+
+<!-- ===== 5. PROPOSED SOLUTION ===== -->
+<div class="section page-break">
+    <div class="section-header">
+        <div class="section-number">5</div>
+        <div class="section-title">Proposed <span class="accent">Hackathon Framework</span></div>
+    </div>
+    <p>{{proposedSolution.overview}}</p>
+
+    <p style="font-weight:700; color:#0f3460; margin-bottom:8px;">Event Core Components</p>
+    <ul class="styled-list">
+        {{#each proposedSolution.components}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+
+    <p style="font-weight:700; color:#0f3460; margin-bottom:12px; margin-top:16px;">Gap-Specific Problem Track
+        Definitions</p>
+    {{#each proposedSolution.gapSpecificApproaches}}
+    <div
+        style="background:#f8faff; border:1px solid #e0e7ff; border-radius:8px; padding:14px 18px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-weight:700; color:#0f3460; font-size:10.5pt;">Track: {{this.gap}}</span>
+            <span style="font-size:8pt; color:#6366f1; font-weight:600;">Rank #{{this.rank}} · Priority Score:
+                {{this.score}}/10</span>
+        </div>
+        <p style="font-size:10pt; color:#374151; margin:0;">{{this.approach}}</p>
+    </div>
+    {{/each}}
+</div>
+
+<!-- ===== 6. IMPLEMENTATION PLAN ===== -->
+<div class="section page-break">
+    <div class="section-header">
+        <div class="section-number">6</div>
+        <div class="section-title">Implementation <span class="accent">Plan</span></div>
+    </div>
+    <div class="timeline-summary-bar">
+        <div class="timeline-summary-card">
+            <label>Total Duration</label>
+            <span>{{timeline.totalDuration}}</span>
+        </div>
+        <div class="timeline-summary-card">
+            <label>Proposed Start</label>
+            <span>{{timeline.proposedStartDate}}</span>
+        </div>
+        <div class="timeline-summary-card">
+            <label>Proposed End</label>
+            <span>{{timeline.proposedEndDate}}</span>
+        </div>
+    </div>
+    <p style="font-size:9.5pt; color:#6b7280; font-style:italic; margin-bottom:20px;">{{timeline.complexityNote}}</p>
+    {{#each timeline.phases}}
+    <div class="phase-card avoid-break">
+        <div class="phase-header">
+            <span class="phase-name">{{this.phase}}: {{this.name}}</span>
+            <span class="phase-meta">{{this.duration}} &nbsp;|&nbsp; {{this.weekRange}}</span>
+        </div>
+        <ul class="phase-activities">
+            {{#each this.activities}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    {{/each}}
+</div>
+
+<!-- ===== 7. EXPECTED OUTCOMES ===== -->
+<div class="section page-break">
+    <div class="section-header">
+        <div class="section-number">7</div>
+        <div class="section-title">Expected <span class="accent">Outcomes</span></div>
+    </div>
+    <p style="font-weight:700; color:#0f3460; margin-bottom:8px;">Immediate Event Outcomes</p>
+    <ul class="styled-list">
+        {{#each expectedOutcomes.shortTermOutcomes}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    <p style="font-weight:700; color:#0f3460; margin-bottom:8px; margin-top:16px;">Long-Term Innovation Impact</p>
+    <ul class="styled-list">
+        {{#each expectedOutcomes.longTermOutcomes}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    <p style="font-weight:700; color:#0f3460; margin-bottom:12px; margin-top:20px;">Key Performance Indicators (KPIs)
+    </p>
+    <table class="kpi-table">
+        <thead>
+            <tr>
+                <th>Performance Indicator</th>
+                <th>Target</th>
+                <th>Measurement Methodology</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each expectedOutcomes.kpis}}
+            <tr>
+                <td style="font-weight:600; color:#0f3460;">{{this.indicator}}</td>
+                <td>{{this.target}}</td>
+                <td>{{this.measurement}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- ===== 8. BUDGET ESTIMATE ===== -->
+<div class="section avoid-break">
+    <div class="section-header">
+        <div class="section-number">8</div>
+        <div class="section-title">Budget <span class="accent">Estimate</span></div>
+    </div>
+    <p>The hackathon budget encompasses venue and logistics, prize distribution, promotional activities, technology
+        infrastructure, and expert mentorship honoraria. The following estimate reflects a preliminary projection and is
+        subject to sponsor contributions and institutional co-funding arrangements.</p>
+    <table class="budget-table">
+        <tbody>
+            <tr>
+                <td><strong>Setup &amp; Administration</strong></td>
+                <td style="text-align:right; font-weight:600;">{{budget.breakdown.setupAndAdministration}}</td>
+            </tr>
+            <tr>
+                <td><strong>Gap-Track Problem Development Costs</strong></td>
+                <td style="text-align:right; font-weight:600;">{{budget.breakdown.gapAddressingCosts}}</td>
+            </tr>
+            <tr>
+                <td><strong>Prize Pool &amp; Logistics</strong></td>
+                <td style="text-align:right; font-weight:600;">{{budget.breakdown.programSpecificCosts}}</td>
+            </tr>
+            <tr>
+                <td><strong>Contingency Reserve</strong></td>
+                <td style="text-align:right; font-weight:600;">{{budget.breakdown.contingencyReserve}}</td>
+            </tr>
+            <tr class="total-row">
+                <td>ESTIMATED TOTAL (USD)</td>
+                <td style="text-align:right;">{{budget.estimatedTotalUSD}}</td>
+            </tr>
+            <tr class="total-row" style="background: linear-gradient(135deg, #1a1a2e, #0f3460);">
+                <td>ESTIMATED TOTAL (INR)</td>
+                <td style="text-align:right;">{{budget.estimatedTotalINR}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="budget-note">{{budget.note}}</div>
+</div>

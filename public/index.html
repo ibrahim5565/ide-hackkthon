@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposal Auto-Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --accent: #6366f1;
+            --accent-lt: #818cf8;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --success: #238636;
+            --success-lt: #2ea043;
+            --error: #da3633;
+            --error-lt: #f85149;
+            --warn-bg: #1c1600;
+            --warn-bdr: #9e6a03;
+            --radius: 10px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        header h1 .icon {
+            font-size: 1.4rem;
+        }
+
+        header p {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 36px 20px 80px;
+        }
+
+        /* ── SECTION CARD ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 30px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-lt);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── FORM ELEMENTS ── */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 6px;
+            letter-spacing: 0.02em;
+        }
+
+        .field label span.req {
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            padding: 9px 13px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            appearance: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, .18);
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b949e' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 34px;
+            cursor: pointer;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 72px;
+        }
+
+        /* tag-style multi-input (departments) */
+        .tag-input-wrapper {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 44px;
+            cursor: text;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .tag-input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, .18);
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, .18);
+            border: 1px solid rgba(99, 102, 241, .35);
+            color: var(--accent-lt);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        .tag button {
+            background: none;
+            border: none;
+            color: var(--accent-lt);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0;
+            line-height: 1;
+            opacity: .7;
+        }
+
+        .tag button:hover {
+            opacity: 1;
+        }
+
+        .tag-real-input {
+            flex: 1;
+            min-width: 120px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            padding: 3px 2px;
+            outline: none;
+        }
+
+        .helper {
+            font-size: 0.73rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        /* ── GAP ITEMS ── */
+        #gaps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .gap-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px 20px;
+            position: relative;
+        }
+
+        .gap-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .gap-num {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-lt);
+        }
+
+        .btn-remove-gap {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-remove-gap:hover {
+            border-color: var(--error-lt);
+            color: var(--error-lt);
+        }
+
+        .btn-add-gap {
+            width: 100%;
+            margin-top: 10px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            color: var(--muted);
+            border-radius: 8px;
+            padding: 11px;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .btn-add-gap:hover {
+            border-color: var(--accent);
+            color: var(--accent-lt);
+        }
+
+        /* ── SUBMIT BUTTON ── */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity .2s, transform .1s;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            opacity: .9;
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* ── SPINNER ── */
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── RESULT AREA ── */
+        #result {
+            display: none;
+        }
+
+        .result-success {
+            background: rgba(35, 134, 54, .12);
+            border: 1px solid rgba(46, 160, 67, .4);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            text-align: center;
+        }
+
+        .result-success .checkmark {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .result-success h3 {
+            font-size: 1rem;
+            color: #4ade80;
+            margin-bottom: 6px;
+        }
+
+        .result-success p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .download-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-download.primary {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            color: #fff;
+        }
+
+        .btn-download.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-download:hover {
+            opacity: .85;
+            transform: translateY(-1px);
+        }
+
+        .result-error {
+            background: rgba(218, 54, 51, .1);
+            border: 1px solid rgba(248, 81, 73, .35);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+        }
+
+        .result-error h3 {
+            font-size: 0.9rem;
+            color: var(--error-lt);
+            margin-bottom: 8px;
+        }
+
+        .result-error pre {
+            font-size: 0.78rem;
+            color: var(--muted);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ── PROGRESS ── */
+        .progress-bar-wrap {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 14px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #a5b4fc);
+            width: 0%;
+            transition: width .4s ease;
+        }
+
+        /* ── STATUS LOG ── */
+        #status-log {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 10px;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1><span class="icon">📄</span> Proposal Auto-Generator Platform</h1>
+        <p>Fill in the details below to generate a professional institutional proposal PDF</p>
+    </header>
+
+    <div class="container">
+        <form id="proposal-form" novalidate>
+
+            <!-- ═══ PROPOSAL TYPE ═══ -->
+            <div class="card">
+                <div class="card-title">① Proposal Type</div>
+                <div class="field">
+                    <label for="proposalType">Select Proposal Type <span class="req">*</span></label>
+                    <select id="proposalType" name="proposalType" required>
+                        <option value="">— choose type —</option>
+                        <option value="vac">📘 VAC — Value Added Course</option>
+                        <option value="internship">🏢 Internship — Industry Program</option>
+                        <option value="hackathon">⚡ Hackathon — Collaboration Event</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ═══ INSTITUTION PROFILE ═══ -->
+            <div class="card">
+                <div class="card-title">② Institution Profile</div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label for="instName">Institution Name <span class="req">*</span></label>
+                        <input type="text" id="instName" placeholder="e.g. Sri Venkateswara College of Engineering"
+                            required />
+                    </div>
+                    <div class="field">
+                        <label for="instType">Institution Type <span class="req">*</span></label>
+                        <select id="instType" required>
+                            <option value="">— choose —</option>
+                            <option value="university">University</option>
+                            <option value="college">College</option>
+                            <option value="institute">Institute</option>
+                            <option value="school">School</option>
+                            <option value="polytechnic">Polytechnic</option>
+                            <option value="research_center">Research Center</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label for="instLocation">Location <span class="req">*</span></label>
+                        <input type="text" id="instLocation" placeholder="e.g. Chennai, Tamil Nadu, India" required />
+                    </div>
+                    <div class="field">
+                        <label for="instEmail">Contact Email</label>
+                        <input type="email" id="instEmail" placeholder="e.g. principal@institution.edu" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label for="instEstablished">Year Established</label>
+                        <input type="number" id="instEstablished" placeholder="e.g. 1985" min="1800" max="2026" />
+                    </div>
+                    <div class="field">
+                        <label for="instStudents">Student Count</label>
+                        <input type="number" id="instStudents" placeholder="e.g. 4500" min="0" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label for="instAccreditation">Accreditation</label>
+                        <input type="text" id="instAccreditation" placeholder="e.g. NAAC A+, NBA" />
+                    </div>
+                    <div class="field">
+                        <label for="instWebsite">Website</label>
+                        <input type="text" id="instWebsite" placeholder="e.g. https://institution.edu" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Departments <span class="req">*</span></label>
+                    <div class="tag-input-wrapper" id="dept-wrapper">
+                        <input class="tag-real-input" id="dept-input" type="text"
+                            placeholder="Type a department and press Enter or comma…" />
+                    </div>
+                    <div class="helper">Press <strong>Enter</strong> or <strong>,</strong> after each department name
+                    </div>
+                </div>
+
+                <div class="form-row single">
+                    <div class="field">
+                        <label for="instVision">Institutional Vision</label>
+                        <textarea id="instVision" rows="2"
+                            placeholder="Optional — mission statement or vision text"></textarea>
+                    </div>
+                </div>
+                <div class="form-row single">
+                    <div class="field">
+                        <label for="instMission">Institutional Mission</label>
+                        <textarea id="instMission" rows="2" placeholder="Optional — mission text"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ GAP ANALYSIS ═══ -->
+            <div class="card">
+                <div class="card-title">③ Gap Analysis</div>
+                <div id="gaps-container"></div>
+                <button type="button" class="btn-add-gap" id="add-gap-btn">＋ Add Gap Item</button>
+            </div>
+
+            <!-- ═══ SUBMIT ═══ -->
+            <button type="submit" class="btn-submit" id="submit-btn">
+                <span id="btn-text">🚀 Generate Proposal PDF</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+            <div class="progress-bar-wrap" id="progress-wrap">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div id="status-log"></div>
+
+        </form>
+
+        <!-- ═══ RESULT ═══ -->
+        <div id="result" style="margin-top:24px;"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+﻿{
+  "proposalType": "hackathon",
+  "institutionProfile": {
+    "name": "Sethu Institute of Technology",
+    "type": "college",
+    "location": "Madurai, Tamil Nadu",
+    "contactEmail": "example@email.com",
+    "departments": ["IT", "CSE", "ECE"]
+  },
+  "gapAnalysis": [
+    {
+      "title": "Limited smart waste monitoring",
+      "description": "Waste bins are not monitored in real-time, causing overflow and delayed collection.",
+      "category": "technology",
+      "severity": "high",
+      "affectedDepartments": ["IT", "CSE"]
+    }
+  ]
+}
