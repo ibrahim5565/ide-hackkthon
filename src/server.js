@@ -7,6 +7,7 @@
 
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -59,17 +60,33 @@ const publicDir = path.join(__dirname, '..', 'public');
 app.use(express.static(publicDir));
 
 // ================================================================
-// STATIC FILE SERVING – Generated PDFs (proposals/)
+// DOWNLOAD ROUTE – Generated PDFs (proposals/)
+// Serves PDF files using res.download() for reliable binary delivery.
 // ================================================================
-const proposalsDir = path.join(process.cwd(), 'proposals');
-app.use('/proposals', express.static(proposalsDir, {
-    setHeaders: (res, filePath) => {
-        if (filePath.endsWith('.pdf')) {
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'attachment');
+const PROPOSALS_DIR = path.join(process.cwd(), 'proposals');
+
+app.get('/proposals/:filename', (req, res) => {
+    // Sanitise filename – allow only safe characters, must end in .pdf
+    const raw = req.params.filename;
+    if (!raw || !/^[\w\-]+\.pdf$/i.test(raw)) {
+        return res.status(400).json({ status: 'error', message: 'Invalid filename.' });
+    }
+
+    const filePath = path.join(PROPOSALS_DIR, raw);
+
+    // Guard: file must exist and be inside the proposals dir
+    if (!fs.existsSync(filePath) || !filePath.startsWith(PROPOSALS_DIR)) {
+        return res.status(404).json({ status: 'error', message: 'PDF not found.' });
+    }
+
+    // Stream the PDF as a proper attachment download
+    res.download(filePath, raw, (err) => {
+        if (err && !res.headersSent) {
+            console.error('[server] PDF download error:', err.message);
+            res.status(500).json({ status: 'error', message: 'Failed to send PDF.' });
         }
-    },
-}));
+    });
+});
 
 // ================================================================
 // API ROUTES

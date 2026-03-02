@@ -319,7 +319,7 @@ function validateForm(payload) {
 // ─────────────────────────────────────────
 function showSuccess(data) {
     const resultDiv = document.getElementById('result');
-    const fullUrl = `http://127.0.0.1:3000${data.downloadUrl}`;
+    const fullUrl = `${window.location.origin}${data.downloadUrl}`;
     resultDiv.style.display = 'block';
     resultDiv.innerHTML = `
     <div class="result-success">
